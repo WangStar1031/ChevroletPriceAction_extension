@@ -1,0 +1,18 @@
+{
+	"name": "Add Administration Price Extension",
+	"version": "1.0",
+	"description": "Adding administration price and change logo",
+	"permissions": ["activeTab","declarativeContent","storage"],
+	"content_scripts": [
+		{
+			"matches": ["https://www.chevrolet.ca/*"],
+			"js":["js/jquery.min.js", "js/process.js"]
+		}
+	],
+	"web_accessible_resources": [
+		"image/*.png"
+	],
+	"icons": {
+	},
+	"manifest_version": 2
+}
