@@ -1,5 +1,6 @@
 var logoChanged = false;
 var priceInserted = false;
+var removeBtns = false;
 function getRealNumber(_string){
 	var strCompare = "0123456789";
 	var realNumber = "";
@@ -39,12 +40,12 @@ function makeInterface(){
 				var netPrice = lastPrice.find("div.math-box__line div.math-box__price").text();
 				var strHtml4Net = lastPrice.find("div.math-box__line > div.math-box__price").html();
 				var nPrice = getRealNumber(netPrice);
-				var strInserting = '<div class="math-box__group math-box__group--ruled"><div class="math-box__line math-box__line--total "><span>Administration Fee</span><div class="math-box__price">$499</div></div></div>';
+				var strInserting = '<div class="math-box__group math-box__group--ruled"><div class="math-box__line math-box__line--total "><span>Administration Fee</span><div class="math-box__price">$449</div></div></div>';
 				// lastPrice.insertBefore(strInserting);
 				$(strInserting).insertBefore(lastPrice);
 				console.log("netPrice: ", nPrice);
 				var strPreNetPrice = nPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				var nRealNetPrice = nPrice + 499;
+				var nRealNetPrice = nPrice + 449;
 				var strRealNetPrice = nRealNetPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				strHtml4Net = strHtml4Net.replace(strPreNetPrice, strRealNetPrice);
 				lastPrice.find("div.math-box__line > div.math-box__price").html(strHtml4Net);
@@ -54,7 +55,23 @@ function makeInterface(){
 		}
 		priceInserted = true;
 	}
-	if( logoChanged && priceInserted){
+	if( !removeBtns){
+		if( $(".inventory-summary").length ){
+			$(".inventory-summary").hide();
+			$(".summary-button-container > a").hide();
+			var arrHiddenBtnLabels = ['View Inventory', 'Request A Quote', 'Schedule a Test Drive'];
+			var arrAButtons = $("a.button");
+			for( var i = 0; i < arrAButtons.length; i++){
+				var curBtn = arrAButtons.eq(i);
+				for( var j = 0; j < arrHiddenBtnLabels.length; j++){
+					if( curBtn.text().indexOf(arrHiddenBtnLabels[j]) != -1){
+						curBtn.hide();
+					}
+				}
+			}
+		}
+	}
+	if( logoChanged && priceInserted && removeBtns){
 		return true;
 	}
 	return false;
