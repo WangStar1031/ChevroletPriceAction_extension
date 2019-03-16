@@ -20,9 +20,9 @@ function makeInterface(){
 	var logo = $("#navGroup a img[alt=chevrolet]");
 	if( logo.length && !logoChanged ){
 		logoChange(logo);
-		$("#navGroup a").attr("href", "https://www.georgianchevrolet.com/");
+		$("#navGroup .global-nav__bar > a").attr("href", "https://www.georgianchevrolet.com/");
 	}
-	if( logo.length == 0){
+	if( logo.length == 0 && !logoChanged){
 		logo = $("img.q-nav-logo-image");
 		if( logo.length && !logoChanged){
 			logoChange(logo);
@@ -30,9 +30,13 @@ function makeInterface(){
 		}
 	}
 	var priceDiv = $(".summary__math-box .math-box");
-	if( priceDiv.length && !priceInserted){
+	if( priceDiv.length){
+	// if( priceDiv.length && !priceInserted){
 		for( var i = 0; i < priceDiv.length; i++){
 			var curDiv = priceDiv.eq(i);
+			if( curDiv.find(".math-box_Administration_Fee").length != 0){
+				continue;
+			}
 			var arrGroups = curDiv.find(".math-box__group");
 			var lastPrice = arrGroups.eq(arrGroups.length - 1);
 			if( lastPrice.find("div.math-box__line > span").text() == "Net Price"){
@@ -40,7 +44,7 @@ function makeInterface(){
 				var netPrice = lastPrice.find("div.math-box__line div.math-box__price").text();
 				var strHtml4Net = lastPrice.find("div.math-box__line > div.math-box__price").html();
 				var nPrice = getRealNumber(netPrice);
-				var strInserting = '<div class="math-box__group math-box__group--ruled"><div class="math-box__line math-box__line--total "><span>Administration Fee</span><div class="math-box__price">$449</div></div></div>';
+				var strInserting = '<div class="math-box__group math-box_Administration_Fee math-box__group--ruled"><div class="math-box__line math-box__line--total "><span>Administration Fee</span><div class="math-box__price">$449</div></div></div>';
 				// lastPrice.insertBefore(strInserting);
 				$(strInserting).insertBefore(lastPrice);
 				console.log("netPrice: ", nPrice);
@@ -71,14 +75,14 @@ function makeInterface(){
 			}
 		}
 	}
-	if( logoChanged && priceInserted && removeBtns){
+	if( logoChanged && priceInserted && removeBtns	){
 		return true;
 	}
 	return false;
 }
 var interval = setInterval(function(){
 	if(makeInterface() == true){
-		clearInterval(interval);
+		// clearInterval(interval);
 	}
 });
 
