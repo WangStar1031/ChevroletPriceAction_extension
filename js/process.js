@@ -17,6 +17,7 @@ function logoChange(_logo){
 	logoChanged = true;
 }
 function makeInterface(){
+	$(".q-nav-primary.q-mod.q-mod-nav-primary").hide();
 	var logo = $("#navGroup a img[alt=chevrolet]");
 	if( logo.length && !logoChanged ){
 		logoChange(logo);
@@ -63,7 +64,7 @@ function makeInterface(){
 		if( $(".inventory-summary").length ){
 			$(".inventory-summary").hide();
 			$(".summary-button-container > a").hide();
-			var arrHiddenBtnLabels = ['View Inventory', 'Request A Quote', 'Schedule a Test Drive'];
+			var arrHiddenBtnLabels = ['View Inventory', 'Request A Quote', 'Schedule a Test Drive', 'Locate a Dealer'];
 			var arrAButtons = $("a.button");
 			for( var i = 0; i < arrAButtons.length; i++){
 				var curBtn = arrAButtons.eq(i);
