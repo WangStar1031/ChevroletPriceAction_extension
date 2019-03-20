@@ -14,6 +14,7 @@ function getRealNumber(_string){
 }
 function logoChange(_logo){
 	_logo.attr("src", chrome.extension.getURL("image/new_logo.png"));
+	_logo.attr("srcset", chrome.extension.getURL("image/new_logo.png"));
 	logoChanged = true;
 }
 function makeInterface(){
@@ -86,5 +87,5 @@ var interval = setInterval(function(){
 		// clearInterval(interval);
 	}
 });
-
+makeInterface();
 // alert("This is process.js");
