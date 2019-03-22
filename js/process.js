@@ -12,13 +12,33 @@ function getRealNumber(_string){
 	}
 	return parseInt(realNumber);
 }
+
 function logoChange(_logo){
 	_logo.attr("src", chrome.extension.getURL("image/new_logo.png"));
 	_logo.attr("srcset", chrome.extension.getURL("image/new_logo.png"));
+	chevrolet_logo = '<a href="https://www.chevrolet.ca/en/build-and-price" class="global-nav__brand stat-logo" data-dtm="global nav"><img alt="chevrolet" src="' + chrome.extension.getURL("image/chevrolet-logo.png") + '"></a>';
+	gmc_logo = '<a href="https://www.gmccanada.ca/en/build-and-price" class="global-nav__brand stat-logo" data-dtm="global nav"><img alt="gmc" src="' + chrome.extension.getURL("image/gmc-logo.png") + '"></a>';
+	buick_logo = '<a href="https://www.buick.ca/en/build-and-price" class="global-nav__brand stat-logo" data-dtm="global nav"><img alt="gmc" src="' + chrome.extension.getURL("image/buick-logo.png") + '"></a>';
+
+	all_logos = chevrolet_logo + gmc_logo + buick_logo;
+	$(all_logos).insertAfter(_logo.parent());
+	// $(gmc_logo).insertAfter($(chevrolet_logo));
+	$("a.stat-logo img").height("50px");
+	if( document.location.href.indexOf("www.buick.ca") != -1){
+		$(_logo).parent().removeClass("q-nav-logo");
+	}
+	if( document.location.href.indexOf("www.gmccanada.ca") != -1){
+		$(_logo).width( "180px");
+		$(_logo).css("max-width", "none");
+	}
+
+	// style = '.global.nav img'
 	logoChanged = true;
 }
 function makeInterface(){
-	$(".q-nav-primary.q-mod.q-mod-nav-primary").hide();
+	if( document.location.href.indexOf("www.chevrolet.ca") != -1){
+		$(".q-nav-primary.q-mod.q-mod-nav-primary").hide();
+	}
 	var logo = $("#navGroup a img[alt=chevrolet]");
 	if( logo.length && !logoChanged ){
 		logoChange(logo);

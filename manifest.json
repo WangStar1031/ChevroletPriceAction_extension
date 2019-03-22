@@ -1,11 +1,11 @@
 {
 	"name": "Add Administration Price Extension",
-	"version": "1.3",
+	"version": "1.4",
 	"description": "Adding administration price and change logo",
 	"permissions": ["activeTab","declarativeContent","storage"],
 	"content_scripts": [
 		{
-			"matches": ["https://www.chevrolet.ca/*"],
+			"matches": ["https://www.chevrolet.ca/*", "https://www.buick.ca/*", "https://www.gmccanada.ca/*"],
 			"js":["js/jquery.min.js", "js/process.js"]
 		}
 	],
