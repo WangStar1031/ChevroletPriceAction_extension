@@ -1,6 +1,6 @@
 {
 	"name": "Add Administration Price Extension",
-	"version": "1.4",
+	"version": "1.5",
 	"description": "Adding administration price and change logo",
 	"permissions": ["activeTab","declarativeContent","storage"],
 	"content_scripts": [

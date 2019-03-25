@@ -16,6 +16,8 @@ function getRealNumber(_string){
 function logoChange(_logo){
 	_logo.attr("src", chrome.extension.getURL("image/new_logo.png"));
 	_logo.attr("srcset", chrome.extension.getURL("image/new_logo.png"));
+	_logo.parent().attr("href", "https://www.georgianchevrolet.com/");
+
 	chevrolet_logo = '<a href="https://www.chevrolet.ca/en/build-and-price" class="global-nav__brand stat-logo" data-dtm="global nav"><img alt="chevrolet" src="' + chrome.extension.getURL("image/chevrolet-logo.png") + '"></a>';
 	gmc_logo = '<a href="https://www.gmccanada.ca/en/build-and-price" class="global-nav__brand stat-logo" data-dtm="global nav"><img alt="gmc" src="' + chrome.extension.getURL("image/gmc-logo.png") + '"></a>';
 	buick_logo = '<a href="https://www.buick.ca/en/build-and-price" class="global-nav__brand stat-logo" data-dtm="global nav"><img alt="gmc" src="' + chrome.extension.getURL("image/buick-logo.png") + '"></a>';
@@ -30,6 +32,7 @@ function logoChange(_logo){
 	if( document.location.href.indexOf("www.gmccanada.ca") != -1){
 		$(_logo).width( "180px");
 		$(_logo).css("max-width", "none");
+		$("nav.q-top-bar").css("background", "seagreen");
 	}
 
 	// style = '.global.nav img'
@@ -41,14 +44,14 @@ function makeInterface(){
 	}
 	var logo = $("#navGroup a img[alt=chevrolet]");
 	if( logo.length && !logoChanged ){
+		// $("#navGroup .global-nav__bar > a").attr("href", "https://www.georgianchevrolet.com/");
 		logoChange(logo);
-		$("#navGroup .global-nav__bar > a").attr("href", "https://www.georgianchevrolet.com/");
 	}
 	if( logo.length == 0 && !logoChanged){
 		logo = $("img.q-nav-logo-image");
 		if( logo.length && !logoChanged){
+			// $("#navGroup a").attr("href", "https://www.georgianchevrolet.com/");
 			logoChange(logo);
-			$("#navGroup a").attr("href", "https://www.georgianchevrolet.com/");
 		}
 	}
 	var priceDiv = $(".summary__math-box .math-box");
