@@ -1,6 +1,28 @@
 var logoChanged = false;
 var priceInserted = false;
 var removeBtns = false;
+function removeFooter(){
+	if( document.location.href.indexOf("www.buick.ca") != -1 ||
+		document.location.href.indexOf("www.chevrolet.ca") != -1 ||
+		document.location.href.indexOf("www.gmccanada.ca") != -1
+		){
+		$("footer").remove();
+	}
+}
+removeFooter();
+
+function removeHeader(){
+	if( document.location.href.indexOf("www.buick.ca") != -1 ||
+		document.location.href.indexOf("www.gmccanada.ca") != -1
+		){
+		$(".q-nav-list-container").remove();
+	}
+	else if( document.location.href.indexOf("www.georgianchevrolet.com") != -1){
+		$(".logosWrapper .franchise").remove();
+	}
+}
+removeHeader();
+
 function getRealNumber(_string){
 	var strCompare = "0123456789";
 	var realNumber = "";
@@ -32,12 +54,28 @@ function logoChange(_logo){
 	if( document.location.href.indexOf("www.gmccanada.ca") != -1){
 		$(_logo).width( "180px");
 		$(_logo).css("max-width", "none");
-		$("nav.q-top-bar").css("background", "seagreen");
+		// $("nav.q-top-bar").css("background", "seagreen");
 	}
+	// if( document.location.href.indexOf("www.georgianchevrolet.com") != -1){
+
+	// }
 
 	// style = '.global.nav img'
 	logoChanged = true;
 }
+function addLinks(){
+	if( document.location.href.indexOf("www.georgianchevrolet.com") == -1){
+		return;
+	}
+	chevrolet_logo = '<a href="https://www.chevrolet.ca/en/build-and-price" class="global-nav__brand stat-logo" data-dtm="global nav"><img alt="chevrolet" src="' + chrome.extension.getURL("image/chevrolet-logo.png") + '"></a>';
+	gmc_logo = '<a href="https://www.gmccanada.ca/en/build-and-price" class="global-nav__brand stat-logo" data-dtm="global nav"><img alt="gmc" src="' + chrome.extension.getURL("image/gmc-logo.png") + '"></a>';
+	buick_logo = '<a href="https://www.buick.ca/en/build-and-price" class="global-nav__brand stat-logo" data-dtm="global nav"><img alt="gmc" src="' + chrome.extension.getURL("image/buick-logo.png") + '"></a>';
+
+	all_logos = chevrolet_logo + gmc_logo + buick_logo;
+	$(all_logos).insertAfter($(".logosWrapper .dealer .logo"));
+	logoChanged = true;
+}
+addLinks();
 function makeInterface(){
 	if( document.location.href.indexOf("www.chevrolet.ca") != -1){
 		$(".q-nav-primary.q-mod.q-mod-nav-primary").hide();
@@ -52,6 +90,8 @@ function makeInterface(){
 		if( logo.length && !logoChanged){
 			// $("#navGroup a").attr("href", "https://www.georgianchevrolet.com/");
 			logoChange(logo);
+		} else if(logo.length == 0 && logoChanged){
+			addLinks();
 		}
 	}
 	var priceDiv = $(".summary__math-box .math-box");
@@ -87,7 +127,7 @@ function makeInterface(){
 	if( !removeBtns){
 		if( $(".inventory-summary").length ){
 			$(".inventory-summary").hide();
-			$(".summary-button-container > a").hide();
+			// $(".summary-button-container > a").hide();
 			var arrHiddenBtnLabels = ['View Inventory', 'Request A Quote', 'Schedule a Test Drive', 'Locate a Dealer'];
 			var arrAButtons = $("a.button");
 			for( var i = 0; i < arrAButtons.length; i++){
