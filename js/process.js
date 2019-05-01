@@ -10,6 +10,135 @@ function removeFooter(){
 	}
 }
 removeFooter();
+function addBrochureLink(){
+	var url = document.location.href;
+	if( url.indexOf("build-and-price") == -1)
+		return;
+	var arrPictures = $("picture");
+	var arrLinks = [];
+	var nSiteCat = 0;
+	if( url.indexOf("www.chevrolet.ca") != -1){
+		nSiteCat = 1;
+		arrLinks = {
+			"Blazer" : "https://drive.google.com/open?id=1inl3PayK-FqZGm69Zx0CBqEmMaX1N9RZ",
+			"Bolt EV" : "https://drive.google.com/open?id=15dHXvisjDL1XqEXeYp2jGFzuSZH-9KHL",
+			"Camero" : "https://drive.google.com/open?id=1Qswro0zQ2kUYtI31Mkdw7aWp9QuYHKW0",
+			"Colorado" : "https://drive.google.com/open?id=1O2noM5IrceXLiz7AE4OJ9VCCs9fhCkZK",
+			"Corvette" : "https://drive.google.com/open?id=1Ojd-oo080vECHnRycVgtOv7fvq9FhcWg",
+			"Cruze" : "https://drive.google.com/open?id=1qqg3RCQGaa5Q7qe1Vf3Ivf9gCEX7rdfE",
+			"Equinox" : "https://drive.google.com/open?id=1qjPypDomgP_jq_ShDywJFSU_MZjiZhXS",
+			"Express Cargo" : "https://drive.google.com/open?id=1kSSkBgsbeoxeRxUANllf9GI0SEjJsowi",
+			"Express Passenger" : "https://drive.google.com/open?id=19yU5zokuaKCPamy-JBXv3W9qhg397J0x",
+			"Impala" : "https://drive.google.com/open?id=134lVk8frySh97h3VcBxrY_GyFymSM4ji",
+			"Malibu" : "https://drive.google.com/open?id=1HjmaILAGmx6u7JHuLmKKH-XP2iK87_uu",
+			"Silverado 1500" : "https://drive.google.com/open?id=1C-_4eqpKNX_FYQZTjeUaezoc_tebSJUb",
+			"Silverado 1500LD" : "https://drive.google.com/open?id=1M26BzqUD3l_oKnxYWWlKqMXGPA0gOzgm",
+			"Silverado 2500HD" : "https://drive.google.com/open?id=15S4BlNhZICb82DF8W2s8uWNLWgP1thMk",
+			"Silverado 3500HD" : "https://drive.google.com/open?id=11jSObk9-wan9UMgy2peza0-AnaWxQry8",
+			"Spark" : "https://drive.google.com/open?id=1eQkpKgZwzetki1kzoXK33Tnguyd5yd3F",
+			"Surburban" : "https://drive.google.com/open?id=1EdFda1Dv5U2Z2T61T2A1sGXg4ajMOWkY",
+			"Tahoe" : "https://drive.google.com/open?id=1VNrn9Q2ZkQsixin60hMwwPZPVGphNGde",
+			"Traverse" : "https://drive.google.com/open?id=1WLcnbCjcicX3xhHxyZEyrr_A_B7Rm5P8",
+			"Trax" : "https://drive.google.com/open?id=1KRNi-RC3GZzFMHzvBMiEvT1EJVSBt0Xn",
+			"Volt" : "https://drive.google.com/open?id=1owzELt6FOKLNHrNKNTTszYjEEpw4z2eL",
+		};
+	} else if( url.indexOf("www.gmccanada.ca") != -1){
+		nSiteCat = 2;
+		arrLinks = {
+			"Terrain" : "https://drive.google.com/open?id=1EHdqScBvalUp30eww93fsMku-JbhewD1",
+			"Terrain Denali" : "https://drive.google.com/open?id=1EHdqScBvalUp30eww93fsMku-JbhewD1",
+			"Acadia" : "https://drive.google.com/open?id=1mEK9IyWh0LQlEcePytdDyb5pjNgtwxod",
+			"Acadia Denali" : "https://drive.google.com/open?id=1mEK9IyWh0LQlEcePytdDyb5pjNgtwxod",
+			"Yukon" : "https://drive.google.com/open?id=1l7QXkesUXQG55RKAMCec3E8PmDUdTKb_",
+			"Yukon XL" : "https://drive.google.com/open?id=1l7QXkesUXQG55RKAMCec3E8PmDUdTKb_",
+			"Yukon Denali" : "https://drive.google.com/open?id=1l7QXkesUXQG55RKAMCec3E8PmDUdTKb_",
+			"Yukon XL Denali" : "https://drive.google.com/open?id=1l7QXkesUXQG55RKAMCec3E8PmDUdTKb_",
+			"Canyon" : "https://drive.google.com/open?id=1UQ-XhbAx4Ba7Pe4pPy1W3ekEQhCuZ78Q",
+			"Cannyon All Terrain" : "https://drive.google.com/open?id=1UQ-XhbAx4Ba7Pe4pPy1W3ekEQhCuZ78Q",
+			"Canyon Denali" : "https://drive.google.com/open?id=1UQ-XhbAx4Ba7Pe4pPy1W3ekEQhCuZ78Q",
+			"Sierra 1500" : "https://drive.google.com/open?id=1uvvuPafdzvv9q3W0tSCgI6eAhZ7kHyLa",
+			"Sierra 1500 Limited" : "https://drive.google.com/open?id=1uvvuPafdzvv9q3W0tSCgI6eAhZ7kHyLa",
+			"Sierra AT4" : "https://drive.google.com/open?id=1uvvuPafdzvv9q3W0tSCgI6eAhZ7kHyLa",
+			"Serria 1500 Denali" : "https://drive.google.com/open?id=1uvvuPafdzvv9q3W0tSCgI6eAhZ7kHyLa",
+			"Sierra 2500HD" : "https://drive.google.com/open?id=1i0wfaw37b47YI-RY9sncj25RDTzb8s6K",
+			"Sierra 3500HD" : "https://drive.google.com/open?id=1i0wfaw37b47YI-RY9sncj25RDTzb8s6K",
+			"Sierra 2500 Denali HD" : "https://drive.google.com/open?id=1i0wfaw37b47YI-RY9sncj25RDTzb8s6K",
+			"Sierra 3500 Denali HD" : "https://drive.google.com/open?id=1i0wfaw37b47YI-RY9sncj25RDTzb8s6K",
+			// "Savana Cargo" : "Do not include brochure link",
+			// "Savana Passenger" : "Do not include brochure link",
+		};
+	} else if( url.indexOf("www.buick.ca") != -1){
+		nSiteCat = 3;
+		arrLinks = {
+			"Encore" : "https://drive.google.com/open?id=1K84V1UWoX9e3xHRggEVJCr_ZfxnHP3wb",
+			"Envision" : "https://drive.google.com/open?id=1d534mK3IidnwN2SaaqzBQIMJu8vWViYp",
+			"Enclave" : "https://drive.google.com/open?id=14GqcBSFPPhBt3pWTpJ_qV75V9zzpJ4Ry",
+			"Regal Avenir" : "https://drive.google.com/open?id=1Dv29ZV5REF5f3dkCphjkXs0zB_ZO3BkQ",
+			"Lacrosse Avenir" : "https://drive.google.com/open?id=1iXO5KluAXEP37JoB3P4TewLHGnY9Lpem",
+			"Enclave Avenir" : "https://drive.google.com/open?id=14GqcBSFPPhBt3pWTpJ_qV75V9zzpJ4Ry",
+			"Regal Sportback" : "https://drive.google.com/open?id=1Dv29ZV5REF5f3dkCphjkXs0zB_ZO3BkQ",
+			"Regal GS" : "https://drive.google.com/open?id=1Dv29ZV5REF5f3dkCphjkXs0zB_ZO3BkQ",
+			"Lacrosse" : "https://drive.google.com/open?id=1iXO5KluAXEP37JoB3P4TewLHGnY9Lpem",
+		};
+	}
+	for( var i = 0; i < arrPictures.length; i++){
+		var curPic = arrPictures.eq(i);
+		var curDiv;
+		switch( nSiteCat){
+			case 1:
+				curDiv = curPic.parent().parent().parent().parent().parent().parent().parent();
+				break;
+			case 2:
+				curDiv = curPic.parent().parent().parent().parent().parent().parent();
+				break;
+			case 3:
+				curDiv = curPic.parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent();
+				break;
+
+		}
+		// console.log(curDiv);
+		if( !curDiv)
+			continue;
+		var title = curDiv.find(">div").eq(1).text().trim();
+		if( nSiteCat == 3){
+			title = curDiv.find("p").eq(0).text().trim();
+		}
+		console.log(title);
+		var isFound = false;
+		for( var key in arrLinks){
+			var linkage = arrLinks[key];
+			var nStartPos = title.toLowerCase().lastIndexOf(key.toLowerCase());
+			if( nStartPos != -1 && nStartPos == title.length - key.length){
+				console.log( key);
+				isFound = true;
+				var strLinkage = "";
+				switch( nSiteCat){
+					case 1:
+						strLinkage = "<div style='text-align: center;'><a href='" + 
+							linkage + "' style='color: #4d4d4d;' target='_blank' style='text-align: center;'>Brochure</a></div>"
+						curDiv.append(strLinkage);
+						break;
+					case 2:
+						strLinkage = "<div><a href='" + 
+							linkage + "' style='color: #c00;' target='_blank' style='text-align: center;'>Brochure</a></div>"
+						$(strLinkage).insertAfter(curDiv.find(">a"));
+						break;
+					case 3:
+						curDiv.find(">a").removeClass("large-margin");
+						strLinkage = "<div class='large-margin'><a href='" + 
+							linkage + "' style='color: #c9480c;' target='_blank' style='text-align: center;'>Brochure</a></div>"
+						$(strLinkage).insertAfter(curDiv.find(">a"));
+						break;
+				}
+				break;
+			}
+		}
+		if( isFound == false){
+			console.log("Not found");
+		}
+	}
+}
+addBrochureLink();
 
 function removeHeader(){
 	if( document.location.href.indexOf("www.buick.ca") != -1 ||
