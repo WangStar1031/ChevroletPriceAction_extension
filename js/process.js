@@ -1,6 +1,8 @@
 var logoChanged = false;
 var priceInserted = false;
 var removeBtns = false;
+var financeChanged = false;
+var financeValues = [];
 function removeFooter(){
 	if( document.location.href.indexOf("www.buick.ca") != -1 ||
 		document.location.href.indexOf("www.chevrolet.ca") != -1 ||
@@ -252,6 +254,28 @@ function makeInterface(){
 			}
 		}
 		priceInserted = true;
+	}
+	if( !financeChanged ){
+		var finance_container = $(".finance-options__container");
+		if( finance_container.length != 0){
+			var currencies = finance_container.find(">.finance-options__content .gmst-summary gmwc-currency-format");
+			if( currencies.length != 0) {
+				for( var j = 0; j < currencies.length; j++){
+					var currency = currencies.eq(j);
+					var html = currency.html();
+					var value = html.replace("$", "");
+					value = value  * 1 + 449;
+					value = "$" + value;
+					console.log( value);
+					financeValues[j] = value;
+					currency.html(value);
+				}
+				financeChanged = true;
+			}
+		}
+	}
+	for( var j = 0; j < financeValues.length; j++){
+		$(".finance-options__container>.finance-options__content .gmst-summary gmwc-currency-format").eq(j).html(financeValues[j]);
 	}
 	if( !removeBtns){
 		if( $(".inventory-summary").length ){
