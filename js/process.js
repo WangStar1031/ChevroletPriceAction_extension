@@ -3,6 +3,8 @@ var priceInserted = false;
 var removeBtns = false;
 var financeChanged = false;
 var financeValues = [];
+var strPreNetPrice = 0;
+var financeValue = 0;
 function removeFooter(){
 	if( document.location.href.indexOf("www.buick.ca") != -1 ||
 		document.location.href.indexOf("www.chevrolet.ca") != -1 ||
@@ -207,6 +209,17 @@ function addLinks(){
 	logoChanged = true;
 }
 addLinks();
+function calcFinance( P, r, n){
+	var A;
+	var temp = 1;
+	for( var i = 0; i < n; i++){
+		temp *= ( 1 + r);
+	}
+	console.log( temp);
+	A = Math.round(P * r * temp / (temp - 1) * 100) / 100;
+	console.log( A);
+	return A;
+}
 function makeInterface(){
 	if( document.location.href.indexOf("www.chevrolet.ca") != -1){
 		$(".q-nav-primary.q-mod.q-mod-nav-primary").hide();
@@ -244,7 +257,7 @@ function makeInterface(){
 				// lastPrice.insertBefore(strInserting);
 				$(strInserting).insertBefore(lastPrice);
 				console.log("netPrice: ", nPrice);
-				var strPreNetPrice = nPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				strPreNetPrice = nPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				var nRealNetPrice = nPrice + 449;
 				var strRealNetPrice = nRealNetPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				strHtml4Net = strHtml4Net.replace(strPreNetPrice, strRealNetPrice);
@@ -255,28 +268,33 @@ function makeInterface(){
 		}
 		priceInserted = true;
 	}
-	if( !financeChanged ){
+	if( priceInserted && !financeChanged ){
 		var finance_container = $(".finance-options__container");
 		if( finance_container.length != 0){
-			var currencies = finance_container.find(">.finance-options__content .gmst-summary gmwc-currency-format");
-			if( currencies.length != 0) {
-				for( var j = 0; j < currencies.length; j++){
-					var currency = currencies.eq(j);
-					var html = currency.html();
-					var value = html.replace("$", "");
-					value = value  * 1 + 449;
-					value = "$" + value;
-					console.log( value);
-					financeValues[j] = value;
-					currency.html(value);
+			var finance_currencies = finance_container.find(">.finance-options__content .finance-options__content-finance");
+			if( finance_currencies.length != 0) {
+				var currency = finance_currencies.eq(0);
+				if( currency.find(".gmst-summary gmwc-currency-format").length ){
+					var A = currency.find(".gmst-summary gmwc-currency-format").eq(0).html().replace("$", "") * 1;
+					var P = strPreNetPrice.split(",").join( "") * 1 + 449;
+					var n = currency.find("span.gmst-summary-term").eq(0).html() * 1;
+					var r = currency.find("span.gmst-pe-finance-summary-termApr").eq(0).html().replace("%", "") * 1 / 100 / 12;
+					console.log("P:", P);
+					console.log("A:", A);
+					console.log("n:", n);
+					console.log("r:", r);
+					financeValue = calcFinance(P, r, n);
+					financeChanged = true;
 				}
-				financeChanged = true;
 			}
 		}
 	}
-	for( var j = 0; j < financeValues.length; j++){
-		$(".finance-options__container>.finance-options__content .gmst-summary gmwc-currency-format").eq(j).html(financeValues[j]);
+	if( financeChanged){
+		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary gmwc-currency-format").html("$" + financeValue);
 	}
+	// for( var j = 0; j < financeValues.length; j++){
+	// 	$(".finance-options__container>.finance-options__content .gmst-summary gmwc-currency-format").eq(j).html(financeValues[j]);
+	// }
 	if( !removeBtns){
 		if( $(".inventory-summary").length ){
 			$(".inventory-summary").hide();
