@@ -211,6 +211,9 @@ function addLinks(){
 }
 addLinks();
 function calcFinance( P, r, n){
+	if( r == 0){
+		return Math.round(P * 1 / n * 100) / 100;
+	}
 	var A;
 	var temp = 1;
 	for( var i = 0; i < n; i++){
@@ -295,7 +298,7 @@ function makeInterface(){
 		// var biText = $(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary .gmst-summary-permonth").html();
 		// biText = biText.replace("bi-weekly", "monthly for ");
 		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary .gmst-summary-permonth").html("monthly for ");
-		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary-text gmwc-currency-format").html("$" + strRealNetPrice);
+		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary-text gmwc-currency-format").html("$" + 	strRealNetPrice);
 	}
 	// for( var j = 0; j < financeValues.length; j++){
 	// 	$(".finance-options__container>.finance-options__content .gmst-summary gmwc-currency-format").eq(j).html(financeValues[j]);
