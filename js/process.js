@@ -4,6 +4,7 @@ var removeBtns = false;
 var financeChanged = false;
 var financeValues = [];
 var strPreNetPrice = 0;
+var strRealNetPrice = 0;
 var financeValue = 0;
 function removeFooter(){
 	if( document.location.href.indexOf("www.buick.ca") != -1 ||
@@ -259,7 +260,7 @@ function makeInterface(){
 				console.log("netPrice: ", nPrice);
 				strPreNetPrice = nPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				var nRealNetPrice = nPrice + 449;
-				var strRealNetPrice = nRealNetPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				strRealNetPrice = nRealNetPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				strHtml4Net = strHtml4Net.replace(strPreNetPrice, strRealNetPrice);
 				lastPrice.find("div.math-box__line > div.math-box__price").html(strHtml4Net);
 			} else{
@@ -291,6 +292,10 @@ function makeInterface(){
 	}
 	if( financeChanged){
 		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary gmwc-currency-format").html("$" + financeValue);
+		// var biText = $(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary .gmst-summary-permonth").html();
+		// biText = biText.replace("bi-weekly", "monthly for ");
+		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary .gmst-summary-permonth").html("monthly for ");
+		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary-text gmwc-currency-format").html("$" + strRealNetPrice);
 	}
 	// for( var j = 0; j < financeValues.length; j++){
 	// 	$(".finance-options__container>.finance-options__content .gmst-summary gmwc-currency-format").eq(j).html(financeValues[j]);
