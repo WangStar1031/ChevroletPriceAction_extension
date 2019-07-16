@@ -322,7 +322,7 @@ function makeInterface(){
 			if( finance_currencies.length != 0) {
 				var currency = finance_currencies.eq(0);
 				if( currency.find(".gmst-summary gmwc-currency-format").length ){
-					var PV = strPreNetPrice.split(",").join( "") * 1;
+					var PV = strPreNetPrice.split(",").join( "") * 1 + 449;
 					var _i = currency.find("span.gmst-pe-finance-summary-termApr").eq(0).html().replace("%", "") * 1 / 100 / 12;
 					var N = currency.find("span.gmst-summary-term").eq(0).html() * 1;
 					$("gm-translate").click();
