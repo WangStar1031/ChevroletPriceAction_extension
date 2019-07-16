@@ -41,9 +41,9 @@ function addBrochureLink(){
 			"Impala" : "https://drive.google.com/open?id=134lVk8frySh97h3VcBxrY_GyFymSM4ji",
 			"Malibu" : "https://drive.google.com/open?id=1HjmaILAGmx6u7JHuLmKKH-XP2iK87_uu",
 			"Silverado 1500" : "https://drive.google.com/open?id=1C-_4eqpKNX_FYQZTjeUaezoc_tebSJUb",
-			"Silverado 1500LD" : "https://drive.google.com/open?id=1M26BzqUD3l_oKnxYWWlKqMXGPA0gOzgm",
-			"Silverado 2500HD" : "https://drive.google.com/open?id=15S4BlNhZICb82DF8W2s8uWNLWgP1thMk",
-			"Silverado 3500HD" : "https://drive.google.com/open?id=11jSObk9-wan9UMgy2peza0-AnaWxQry8",
+			"Silverado 1500 LD" : "https://drive.google.com/open?id=1M26BzqUD3l_oKnxYWWlKqMXGPA0gOzgm",
+			"Silverado 2500 HD" : "https://drive.google.com/open?id=15S4BlNhZICb82DF8W2s8uWNLWgP1thMk",
+			"Silverado 3500 HD" : "https://drive.google.com/open?id=11jSObk9-wan9UMgy2peza0-AnaWxQry8",
 			"Spark" : "https://drive.google.com/open?id=1eQkpKgZwzetki1kzoXK33Tnguyd5yd3F",
 			"Surburban" : "https://drive.google.com/open?id=1EdFda1Dv5U2Z2T61T2A1sGXg4ajMOWkY",
 			"Tahoe" : "https://drive.google.com/open?id=1VNrn9Q2ZkQsixin60hMwwPZPVGphNGde",
@@ -109,15 +109,39 @@ function addBrochureLink(){
 		if( !curDiv)
 			continue;
 		var title = curDiv.find(">div").eq(1).text().trim();
+		if( nSiteCat == 1){
+			title = curDiv.find("h3.q-descriptive1").eq(0).text().trim();
+		}
 		if( nSiteCat == 3){
 			title = curDiv.find("p").eq(0).text().trim();
 		}
 		console.log(title);
 		var isFound = false;
+		function isMatching(_key, _title){
+			// debugger;
+			switch( _key){
+				case "cruze": case "corvette": if(_title.indexOf(_key) != -1) return true;
+				break;
+				case "camero": if( _title.indexOf("camaro") != -1) return true;
+				break;
+				case "surburban": if( _title.indexOf("suburban") != -1) return true;
+				break;
+			}
+			var arr_key = _key.split(" ");
+			var arr_title = _title.split(" ");
+			for( var i = 0; i < arr_title.length; i++){
+				if( i == 0 && arr_title[i] == "2019")
+					continue;
+				if( arr_key.indexOf( arr_title[i]) == -1)
+					return false;
+			}
+			return true;
+		}
 		for( var key in arrLinks){
 			var linkage = arrLinks[key];
 			var nStartPos = title.toLowerCase().lastIndexOf(key.toLowerCase());
-			if( nStartPos != -1 && nStartPos == title.length - key.length){
+			// if( nStartPos != -1 && nStartPos == title.length - key.length){
+			if( isMatching( key.toLowerCase(), title.toLowerCase())){
 				console.log( key);
 				isFound = true;
 				var strLinkage = "";
