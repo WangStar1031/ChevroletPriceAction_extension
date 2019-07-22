@@ -264,6 +264,10 @@ function calcLease(_PV, _FV, _N, _i){
 	console.log(A);
 	return A;
 }
+var strFinanceDetails = "";
+	strFinanceDetails = '<span class="gmst-summary-text-extra-string"> HST and Lic Fees extra</span>';
+var strLeaseDetails = "";
+	strLeaseDetails = '<span class="gmst-summary-text-extra-string"> HST and Lic Fees extra</span>';
 function makeInterface(){
 	if( document.location.href.indexOf("www.chevrolet.ca") != -1){
 		$(".q-nav-primary.q-mod.q-mod-nav-primary").hide();
@@ -319,6 +323,7 @@ function makeInterface(){
 			if( finance_currencies.length != 0) {
 				var currency = finance_currencies.eq(0);
 				if( currency.find(".gmst-summary gmwc-currency-format").length ){
+					console.log(strFinanceDetails);
 					var A = currency.find(".gmst-summary gmwc-currency-format").eq(0).html().replace("$", "") * 1;
 					var P = strPreNetPrice.split(",").join( "") * 1 + 449;
 					var n = currency.find("span.gmst-summary-term").eq(0).html() * 1;
@@ -329,6 +334,7 @@ function makeInterface(){
 					console.log("r:", r);
 					financeValue = calcFinance(P, r, n);
 					financeChanged = true;
+					$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary-text").html(strFinanceDetails);
 				}
 			}
 		}
@@ -337,6 +343,9 @@ function makeInterface(){
 		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary gmwc-currency-format").html("$" + financeValue);
 		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary .gmst-summary-permonth").html("monthly for ");
 		$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary-text gmwc-currency-format").html("$" + 	strRealNetPrice);
+		if( $(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary-text .gmst-summary-text-extra-string").length == 0){
+			$(".finance-options__container > .finance-options__content .finance-options__content-finance .gmst-summary-text").append(strFinanceDetails);
+		}
 	}
 	if( priceInserted && !leaseChanged ){//finance-options__content-lease
 		// $("#gmwc-modal")
@@ -376,6 +385,9 @@ function makeInterface(){
 		$(".finance-options__container > .finance-options__content .finance-options__content-lease .gmst-summary gmwc-currency-format").html("$" + leaseValue);
 		$(".finance-options__container > .finance-options__content .finance-options__content-lease .gmst-summary .gmst-summary-permonth").html("monthly for ");
 		// $(".finance-options__container > .finance-options__content .finance-options__content-lease .gmst-summary-text gmwc-currency-format").html("$" + 	strRealNetPrice);
+		if( $(".finance-options__container > .finance-options__content .finance-options__content-lease .gmst-summary-text .gmst-summary-text-extra-string").length == 0){
+			$(".finance-options__container > .finance-options__content .finance-options__content-lease .gmst-summary-text").append(strLeaseDetails);
+		}
 	}
 	// for( var j = 0; j < financeValues.length; j++){
 	// 	$(".finance-options__container>.finance-options__content .gmst-summary gmwc-currency-format").eq(j).html(financeValues[j]);
